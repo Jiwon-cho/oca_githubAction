@@ -1,0 +1,33 @@
+name: 'My First GitHub Action'
+
+# on: ['push','pull_request']
+# on:
+#   - 'push'
+#   - 'pull_request'
+# 이케 다됨
+
+on: push
+
+
+jobs: 
+  first-job:
+    name: 'First Job'
+
+    runs-on: ubuntu-latest
+    # runs-on ['windows-latest','ubuntu-latest','macos-latest']
+
+    steps:
+      - name: 'Say Hello World on step 1'
+        shell: bash
+        run: |
+          echo "Hello World from Step 1"
+
+      - name: 'Say Lorem Ipsum on step 2'
+        shell: pwsh
+        run: |
+          echo 'Lorem Ipsum from step 2'
+
+  # second-job: 
+
+  
+  
