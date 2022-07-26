@@ -25,11 +25,35 @@ jobs:
         shell: bash
         run: |
           echo "Hello World"
-  
   deploy-to-dev-job:
     name: 'Deployment Job to DEV'
-    # needs:
-    # - build-job
+    needs:
+    - build-job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Say DEV'
+        shell: bash
+        run: |
+          echo "DEVELOPERS" 
+           
+  deploy-to-qa1-job:
+    name: 'Deployment Job to QA1'
+    needs:
+    - deploy-to-dev-job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Say DEV'
+        shell: bash
+        run: |
+          echo "DEVELOPERS"
+  deploy-to-qa2-job:
+    name: 'Deployment Job to QA2'
+    needs:
+    - deploy-to-dev-job
 
     runs-on: ubuntu-latest
 
@@ -41,8 +65,8 @@ jobs:
   deploy-to-prod-job:
     name: 'Deployment Job to PROD'
     needs:
-    - deploy-to-dev-job
-    - build-job
+    - deploy-to-qa1-job
+    - deploy-to-qa2-job
 
     runs-on: ubuntu-latest
 
