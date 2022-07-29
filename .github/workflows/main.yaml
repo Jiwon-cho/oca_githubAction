@@ -6,7 +6,10 @@ name: 'My First GitHub Action'
 #   - 'pull_request'
 # 이케 다됨
 
-on: push
+on: 
+  push:
+    branches:
+      - other
 
 
 # env:
