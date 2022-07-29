@@ -28,7 +28,7 @@ jobs:
     - name: Restore NuGet packages
       shell: bash
       run: |
-        dotnet restore ./api
+        dotnet restore ././api
 
     - name: Build solution
       shell: bash
