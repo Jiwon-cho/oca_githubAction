@@ -1,0 +1,153 @@
+name: 'My First GitHub Action'
+
+# on: ['push','pull_request']
+# on:
+#   - 'push'
+#   - 'pull_request'
+# 이케 다됨
+
+on: 
+  push:
+    branches:
+      - other
+
+
+# env:
+#   WORKFLOW_LEVEL: 'This value comes from the workflow level'
+
+
+
+jobs:
+  build-job:
+    name: 'Build Job'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Say Hello'
+        shell: bash
+        run: |
+          echo "Hello World"
+  deploy-to-dev-job:
+    name: 'Deployment Job to DEV'
+    needs:
+    - build-job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Say DEV'
+        shell: bash
+        run: |
+          echo "DEVELOPERS" 
+           
+  deploy-to-qa1-job:
+    name: 'Deployment Job to QA1'
+    needs:
+    - deploy-to-dev-job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Say DEV'
+        shell: bash
+        run: |
+          echo "DEVELOPERS"
+  deploy-to-qa2-job:
+    name: 'Deployment Job to QA2'
+    needs:
+    - deploy-to-dev-job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Say DEV'
+        shell: bash
+        run: |
+          echo "DEVELOPERS"
+  deploy-to-prod-job:
+    name: 'Deployment Job to PROD'
+    needs:
+    - deploy-to-qa1-job
+    - deploy-to-qa2-job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Say PROD'
+        shell: bash
+        run: |
+          echo "PRODUCTION"
+
+
+  # first-job:
+  #   name: 'First Job'
+  #   if: github.event_name == 'pull_request'
+
+  #   strategy:
+  #     matrix:
+  #       os: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ]
+  #       nodejs: ['14.x', '16.x']
+
+  #   runs-on: ${{ matrix.os }}
+  #   # runs-on ['windows-latest','ubuntu-latest','macos-latest']
+
+  #   steps:
+  #     - name: 'Setup node.js version'
+  #       uses: actions/setup-node@v3
+  #       with: 
+  #         node-version: ${{ matrix.nodejs }}
+  #     - name: 'Run only on Windows'
+  #       if: matrix.os == 'windows-latest'
+  #       shell: bash
+  #       run: |
+  #         echo "Windows Only"
+
+  #     - name: 'Run not on Windows'
+  #       if: matrix.os != 'windows-latest'
+  #       shell: bash
+  #       run: |
+  #         echo "Not Windows"       
+
+  #     - name: 'Check node.js version on ${{ matrix.os}}'
+  #       shell: bash
+  #       run: |
+  #         echo "nodejs version: $(node --version)"
+    
+    # steps:
+    # - name: 'Say Hello on ${{ matrix.os }}'
+    #   shell: bash
+    #   run: |
+    #     echo "Hello from ${{ matrix.os }}"
+
+    # steps:
+    # - name: 'Say Hello on ${{ matrix.os}}'
+    #   id: step1
+    #   shell: bash
+    #   run: |
+    #     STEP_1='This value comes from the step 1'
+
+    #     echo "::add-mask::$STEP_1"
+    #     echo "::set-output name=value1::$STEP_1"
+
+    # - name: 'Set output value 2'
+    #   id: step2
+    #   shell: pwsh
+    #   run: |
+    #     $STEP_2='This value comes from the step2'
+        
+    #     echo "::set-output name=value2::$STEP_2"
+    # - name: 'Get output values'
+    #   shell: pwsh
+    #   run: |
+    #     echo "STEP 1: ${{ steps.step1.outputs.value1 }}"
+    #     echo "STEP 2: ${{ steps.step2.outputs.value2 }}"
+    #     echo "SECRET 1: ${{ secrets.SECRET_1}}"
+
+    #     if ("${{ secrets.SECRET_1 }}" -eq "Hello World") {
+    #       echo "TRUE"
+    #     } else {
+    #       echo "FALSE"
+    #     }
+    # if문 이건 pwsh 라서 되는것 ,bash 는안됌
+    # githubaction 문법
